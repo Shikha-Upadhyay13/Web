@@ -1,0 +1,30 @@
+// AirBrick Infra — data model
+// Local-first uses SQLite; production swaps `provider`/`DATABASE_URL` to Postgres.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+/// A captured lead from any funnel: contact form, cost estimator,
+/// free 3D render, vendor enquiry, or careers application.
+model Lead {
+  id        String   @id @default(cuid())
+  type      String   @default("contact") // contact | estimate | render | vendor | application | quick-filter
+  name      String
+  email     String
+  phone     String?
+  city      String?
+  company   String?
+  message   String?
+  payload   String? // JSON string for tool-specific data (estimator inputs, etc.)
+  source    String? // page/path the lead came from
+  createdAt DateTime @default(now())
+
+  @@index([type])
+  @@index([createdAt])
+}
