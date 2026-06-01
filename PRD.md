@@ -41,6 +41,10 @@ Rebuild the entire site **near-identical in layout, content, and feature set fir
 | **CMS** | Headless CMS + DB. **Recommended: Payload CMS 3** (runs natively inside Next.js, Postgres adapter) → single deploy, typed content, built-in admin. Fallback: custom admin on Prisma. |
 | **Design fidelity** | Near-identical first, then enhance |
 | **UI quality bar** | Clean, very flexible, high-performance (see §6) |
+| **Brand assets** | Replicate from live site now (logo, colors, fonts, real project images); swap in official assets later |
+| **Estimator pricing** | Build our own transparent placeholder engine (per-sqft × tier × add-ons), rates editable in CMS |
+| **Git workflow** | Commit straight to `main`, push every meaningful change |
+| **Infra** | Build local-first (local Postgres + `.env` placeholders); connect Vercel/Neon/Resend in a later deploy phase |
 
 ### Supporting libraries
 - **Forms/validation:** react-hook-form + zod
@@ -244,12 +248,12 @@ Reusable primitives via shadcn/ui + custom: Button, Input/Select/Textarea, Accor
 ---
 
 ## 8. Open Items (confirm during build, from live render)
-1. **Exact brand colors + font families** — extract from live CSS in Phase 1.
-2. **Stat counter values** (Happy Customers / Projects / Sq Ft) — JS-injected; capture from live site or get from client.
-3. **Estimator option values** (Carpet Size, Workstations lists) and **price ranges** per tier — hidden in JS/API; we'll define our own transparent pricing rules and confirm with stakeholder.
+1. **Exact brand colors + font families** — RESOLVED approach: extract from live CSS in Phase 0.
+2. **Stat counter values** (Happy Customers / Projects / Sq Ft) — JS-injected; capture from live site during Phase 1, else placeholder until client confirms.
+3. **Estimator option values + pricing** — RESOLVED: build our own transparent pricing engine (per-sqft × tier × add-ons), rates editable in CMS; confirm real numbers with stakeholder later.
 4. **3D-render automation** — manual/templated first; AI-generated render is a later enhancement.
-5. **Blog** — proxy WP via REST vs. full migration into CMS.
-6. **Project images** — source/replace 36×~5 images (license/quality); may re-shoot/placeholder.
+5. **Blog** — proxy WP via REST vs. full migration into CMS (decide in Phase 4).
+6. **Project images** — RESOLVED: replicate (download) from live site now; swap official high-res assets later.
 
 ---
 
