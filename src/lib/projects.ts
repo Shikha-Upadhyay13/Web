@@ -8,15 +8,21 @@ export type Project = {
   id: number;
   title: string;
   slug: string;
-  image: string;
+  image: string; // grid thumbnail
+  gallery: string[]; // detail-page carousel images
   category: string;
   location?: string;
   area?: string;
   industry?: string;
 };
 
+// Number of carousel images replicated per project (0 = thumbnail only).
+const galleryCounts: Record<number, number> = {
+  1: 5, 2: 5, 3: 5, 4: 3, 5: 5, 6: 5, 7: 5, 8: 4, 9: 5, 10: 5, 11: 5, 13: 5, 15: 5,
+};
+
 const raw: Array<
-  Omit<Project, "image" | "slug"> & { slug?: string }
+  Omit<Project, "image" | "slug" | "gallery"> & { slug?: string }
 > = [
   { id: 1, title: "IND Money Ahmedabad", category: "Corporate Office" },
   { id: 2, title: "Codinix", category: "Corporate Office" },
@@ -64,12 +70,20 @@ function slugify(s: string) {
     .replace(/(^-|-$)/g, "");
 }
 
-export const projects: Project[] = raw.map((p) => ({
-  ...p,
-  slug: p.slug ?? slugify(p.title),
-  image: `/projects/${p.id}.jpg`,
-  category: p.category,
-}));
+export const projects: Project[] = raw.map((p) => {
+  const count = galleryCounts[p.id] ?? 0;
+  const gallery =
+    count > 0
+      ? Array.from({ length: count }, (_, i) => `/projects/${p.id}/${i + 1}.jpg`)
+      : [`/projects/${p.id}.jpg`];
+  return {
+    ...p,
+    slug: p.slug ?? slugify(p.title),
+    image: `/projects/${p.id}.jpg`,
+    gallery,
+    category: p.category,
+  };
+});
 
 export const projectCategories = Array.from(
   new Set(projects.map((p) => p.category)),
