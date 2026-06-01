@@ -1,0 +1,106 @@
+@import "tailwindcss";
+
+/*
+ * AirBrick Infra — Design Tokens
+ * Palette extracted from the live site (airbrickinfra.com):
+ *   brand teal #073842 / #0a4d61, glow #1083a5, section navy #203556,
+ *   warm-gold accent #d2ab74, body text #444, surfaces #fff.
+ * Change a value here and the whole site restyles (flexibility requirement).
+ */
+@theme {
+  /* Brand */
+  --color-brand: #073842;
+  --color-brand-light: #0a4d61;
+  --color-brand-glow: #1083a5;
+  --color-navy: #203556;
+
+  /* Accent (warm gold) */
+  --color-accent: #d2ab74;
+  --color-accent-soft: #c9b69b;
+
+  /* Neutrals */
+  --color-ink: #444444;
+  --color-heading: #1d2b32;
+  --color-muted: #6b7c82;
+  --color-line: #e6ebec;
+  --color-surface: #ffffff;
+  --color-surface-soft: #f5f7f8;
+  --color-surface-dark: #073842;
+
+  /* Typography */
+  --font-sans: var(--font-jost), ui-sans-serif, system-ui, sans-serif;
+
+  /* Layout */
+  --container-max: 1200px;
+
+  /* Easing */
+  --ease-out-soft: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+:root {
+  --background: var(--color-surface);
+  --foreground: var(--color-ink);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    line-height: 1.7;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    color: var(--color-heading);
+    font-weight: 600;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  ::selection {
+    background: var(--color-accent);
+    color: #fff;
+  }
+}
+
+@layer components {
+  /* Section padding rhythm used across the site */
+  .section {
+    padding-block: clamp(3.5rem, 7vw, 6.5rem);
+  }
+
+  /* Small uppercase eyebrow label above section headings */
+  .eyebrow {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+  }
+}
+
+/* Respect users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
